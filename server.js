@@ -6,7 +6,7 @@ import cors from 'cors'
 import formData from 'express-form-data'
 
 // connect to MongoDB with mongoose
-
+import './config/database.js'
 // import routes
 
 // create the express app
