@@ -4,14 +4,13 @@ import express from 'express'
 import logger from 'morgan'
 import cors from 'cors'
 import formData from 'express-form-data'
-configDotenv()
+
 // connect to MongoDB with mongoose
 import './config/database.js'
 
 // import routes
-import { router as authRouter } from './routes/auth.js'
 import { router as profilesRouter } from './routes/profile.js'
-import { configDotenv } from 'dotenv'
+import { router as authRouter } from './routes/auth.js'
 
 // create the express app
 const app = express()
@@ -23,8 +22,8 @@ app.use(express.json())
 app.use(formData.parse())
 
 // mount imported routes
+app.use('/api/profiles/', profilesRouter)
 app.use('/api/auth', authRouter)
-app.use('api/profiles/', profilesRouter)
 
 // handle 404 errors
 app.use(function(req, res, next){
