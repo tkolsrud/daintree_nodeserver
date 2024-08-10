@@ -1,4 +1,8 @@
+import { profile } from 'console'
 import { Profile } from '../models/profile.js'
+
+
+// Profile Controllers
 
 async function index(req, res) {
     try {
@@ -10,8 +14,21 @@ async function index(req, res) {
     }
 }
 
+async function profileDetail(req, res) {
+    try {
+        const profile = await Profile.findById(req.user.profile)
+            .populate('cart')
+            .populate({path: 'wishLists', select: 'name'})
+        res.status(200).json(profile)
+    } catch(err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
+
+// Cart Controllers
+
 async function addToCart(req, res) {
-    console.log("add to cart", req.body)
     try {
         const profile = await Profile.findById(req.user.profile)
         profile.cart.push(req.body)
@@ -36,8 +53,28 @@ async function removeFromCart(req, res) {
     }
 }
 
+// Wish List Controllers
+
+async function createWishList(req, res) {
+    try {
+        const profile = await Profile.findById(req.user.profile)
+            .populate('cart')
+            .populate({ path: 'wishLists', select: 'names'})
+        if (profile.wishLists.some(wishList => wishList.Name === req.body.name )) throw new Error('wishList already exists')
+        
+        profile.wishLists.push(req.body)
+        profile.save()
+        res.status(200).json(profile)
+    } catch(err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
+
 export { 
         index, 
+        profileDetail,
         addToCart,
-        removeFromCart
+        removeFromCart,
+        createWishList
     }
