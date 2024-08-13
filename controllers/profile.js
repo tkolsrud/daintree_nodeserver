@@ -43,9 +43,7 @@ async function addToCart(req, res) {
 async function removeFromCart(req, res) {
     try {
         const profile = await Profile.findById(req.user.profile)
-        const cart = profile.cart
-        // This index will probably just end up coming from the front end:
-        cart.splice(cart.findIndex((item) => item._id === req.body.productId), 1)
+        profile.cart[req.body.prodctIndex].deleteOne()
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -71,8 +69,20 @@ async function createWishList(req, res) {
     }
 }
 
+async function deleteWishList(req, res) {
+    try {
+        const profile = await Profile.findById(req.user.profile)
+        profile.wishLists[req.body.wishListIndex].deleteOne()
+        profile.save()
+        res.status(200).json(profile)
+    } catch(err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+
+}
+
 async function addToWishList(req, res){
-    console.log(req.body)
     try {
         const profile = await Profile.findById(req.user.profile)
         profile.wishLists[req.body.wishListIndex].products.push(req.body.product)
@@ -87,7 +97,7 @@ async function addToWishList(req, res){
 async function removeFromWishList(req, res){
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.wishListIndex].products.splice(req.body.productIndex, 1)
+        profile.wishLists[req.body.wishListIndex].products[req.body.productIndex].deleteOne()
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -103,5 +113,6 @@ export {
         removeFromCart,
         createWishList,
         addToWishList,
-        removeFromWishList
+        removeFromWishList,
+        deleteWishList
     }
