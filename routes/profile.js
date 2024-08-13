@@ -15,10 +15,12 @@ router.get('/user-profile', checkAuth, profilesCtrl.profileDetail)
 
 // Cart Routes
 router.post('/add-to-cart', checkAuth, profilesCtrl.addToCart)
-router.put('/remove-from-cart', checkAuth, profilesCtrl.removeFromCart)
+router.post('/remove-from-cart', checkAuth, profilesCtrl.removeFromCart)
 
 // Wish List Routes
 router.post('/create-wishlist', checkAuth, profilesCtrl.createWishList)
-router.put('/add-product', checkAuth, profilesCtrl.addToWishList)
+router.post('/add-product', checkAuth, profilesCtrl.addToWishList)
+router.delete('/remove-product', checkAuth, profilesCtrl.removeFromWishList)
+
 
 export { router }
