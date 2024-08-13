@@ -19,5 +19,6 @@ router.put('/remove-from-cart', checkAuth, profilesCtrl.removeFromCart)
 
 // Wish List Routes
 router.post('/create-wishlist', checkAuth, profilesCtrl.createWishList)
+router.put('/add-product', checkAuth, profilesCtrl.addToWishList)
 
 export { router }

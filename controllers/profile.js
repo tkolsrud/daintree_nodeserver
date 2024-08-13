@@ -61,8 +61,20 @@ async function createWishList(req, res) {
             .populate('cart')
             .populate({ path: 'wishLists', select: 'names'})
         if (profile.wishLists.some(wishList => wishList.Name === req.body.name )) throw new Error('wishList already exists')
-        
         profile.wishLists.push(req.body)
+        profile.save()
+        res.status(200).json(profile)
+    } catch(err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
+
+async function addToWishList(req, res){
+    console.log(req.body)
+    try {
+        const profile = await Profile.findById(req.user.profile)
+        profile.wishLists[req.body.wishListIndex].products.push(req.body.product)
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -76,5 +88,6 @@ export {
         profileDetail,
         addToCart,
         removeFromCart,
-        createWishList
+        createWishList,
+        addToWishList
     }
