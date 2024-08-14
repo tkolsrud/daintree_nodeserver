@@ -106,6 +106,18 @@ async function removeFromWishList(req, res){
     }
 }
 
+async function changeWishListName(req, res){
+    try {
+        const profile = await Profile.findById(req.user.profile)
+        profile.wishLists[req.body.wishListIndex].name = req.body.newName
+        profile.save()
+        res.status(200).json(profile)
+    } catch(err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+}
+
 export { 
         index, 
         profileDetail,
@@ -114,5 +126,6 @@ export {
         createWishList,
         addToWishList,
         removeFromWishList,
-        deleteWishList
+        deleteWishList,
+        changeWishListName
     }

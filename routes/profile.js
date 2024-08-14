@@ -18,11 +18,12 @@ router.post('/add-to-cart', checkAuth, profilesCtrl.addToCart)
 router.delete('/remove-from-cart', checkAuth, profilesCtrl.removeFromCart)
 
 // Wish List Routes
-router.post('/create-wishlist', checkAuth, profilesCtrl.createWishList)
-router.delete('/delete-wishlist', checkAuth, profilesCtrl.deleteWishList)
+router.post('/create-wl', checkAuth, profilesCtrl.createWishList)
+router.delete('/delete-wl', checkAuth, profilesCtrl.deleteWishList)
+router.patch('/change-wl-name', checkAuth, profilesCtrl.changeWishListName)
 
-router.post('/add-product', checkAuth, profilesCtrl.addToWishList)
-router.delete('/remove-product', checkAuth, profilesCtrl.removeFromWishList)
+router.post('/add-product-wl', checkAuth, profilesCtrl.addToWishList)
+router.delete('/remove-product-wl', checkAuth, profilesCtrl.removeFromWishList)
 
 
 export { router }
