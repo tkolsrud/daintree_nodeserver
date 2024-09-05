@@ -32,7 +32,7 @@ async function signup(req, res) {
 }
 
 async function login(req, res) {
-    console.log(req.headers)
+    console.log(req.body)
     try {
         if (!process.env.SECRET) throw new Error('no SECRET in back-end env')
         
