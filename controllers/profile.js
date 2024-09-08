@@ -1,6 +1,4 @@
-import { profile } from 'console'
 import { Profile } from '../models/profile.js'
-
 
 // Profile Controllers
 

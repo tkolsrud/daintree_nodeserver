@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const productSchema = new Schema(
     {
-        apiEndpoint: {
+        apiId: {
             type: String,
             required: true
         },
@@ -23,7 +23,11 @@ const productSchema = new Schema(
             type: Number,
             required: true
         },
-        tags: [ String ]
+        tags: [ String ],
+        thumbnail: {
+            type: String,
+            required: true
+        }
     },
     { timestamps: true }
 )
