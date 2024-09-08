@@ -38,9 +38,7 @@ async function login(req, res) {
         
         const user = await User.findOne({ email: req.body.email })
         const profile = await Profile.findById(user.profile)
-            // Should this be selectively fetched per page, or just fetched on login?:
-            // .populate('cart')
-            // .populate({ path: 'wishLists', select: 'name' })
+    
         if (!user) throw new Error('User not found')
 
         const isMatch = await user.comparePassword(req.body.password)
