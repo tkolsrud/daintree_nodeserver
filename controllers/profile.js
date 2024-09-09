@@ -57,7 +57,7 @@ async function createWishList(req, res) {
         const profile = await Profile.findById(req.user.profile)
             .populate('cart')
             .populate({ path: 'wishLists', select: 'names'})
-        if (profile.wishLists.some(wishList => wishList.Name === req.body.name )) throw new Error('wishList already exists')
+        if (profile.wishLists.some(wishList => wishList.name === req.body.name )) throw new Error('wishList already exists')
         profile.wishLists.push(req.body)
         profile.save()
         res.status(200).json(profile)
@@ -70,7 +70,7 @@ async function createWishList(req, res) {
 async function deleteWishList(req, res) {
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.wishListIndex].deleteOne()
+        profile.wishLists[req.body.id].deleteOne()
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -83,7 +83,9 @@ async function deleteWishList(req, res) {
 async function addToWishList(req, res){
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.wishListIndex].products.push(req.body.product)
+        console.log(req.body)
+        const wishList = profile.wishLists.id(req.body.id)
+        wishList.products.push(req.body.product)
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -95,7 +97,7 @@ async function addToWishList(req, res){
 async function removeFromWishList(req, res){
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.wishListIndex].products[req.body.productIndex].deleteOne()
+        profile.wishLists[req.body.id].products[req.body.productIndex].deleteOne()
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -107,7 +109,7 @@ async function removeFromWishList(req, res){
 async function changeWishListName(req, res){
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.wishListIndex].name = req.body.newName
+        profile.wishLists[req.body.id].name = req.body.newName
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
