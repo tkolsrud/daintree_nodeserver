@@ -39,9 +39,11 @@ async function addToCart(req, res) {
 }
 
 async function removeFromCart(req, res) {
+    console.log(req)
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.cart[req.body.prodctIndex].deleteOne()
+        const cart = profile.cart
+        cart.splice(cart.findIndex(product => product._id === req.params.id), 1)
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
