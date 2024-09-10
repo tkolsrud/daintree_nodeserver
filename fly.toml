@@ -1,0 +1,27 @@
+# fly.toml app configuration file generated for daintree-nodeserver on 2024-09-09T23:57:59-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'daintree-nodeserver'
+primary_region = 'sjc'
+
+[build]
+
+[env]
+  PORT = "8080"
+  FRONTEND_ORIGIN_URL="https://daintree-react.netlify.app"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+

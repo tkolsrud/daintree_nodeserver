@@ -14,7 +14,9 @@
   "version": "1.0.0",
   "description": "express server for daintree retail app",
   "main": "server.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.8"
+  },
   "scripts": {
     "start": "node ./bin/www.js",
     "dev": "nodemon ./bin/www.js"
