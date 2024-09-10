@@ -16,7 +16,10 @@ import { router as authRouter } from './routes/auth.js'
 const app = express()
 
 // basic middleware
-app.use(cors())
+let corsOptions = {
+    origin: ['https//daintree-react.netlify.app']
+}
+app.use(cors(corsOptions))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(formData.parse())
