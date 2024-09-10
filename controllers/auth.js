@@ -73,8 +73,7 @@ async function deleteUser(req, res) {
     try {
         await Profile.findByIdAndDelete(req.user.profile)
         const deletedUser = await User.findByIdAndDelete(req.user._id)
-        
-        res.status(200).json(deletedUser)
+        res.status(200)
     } catch(err) {
         console.log(err)
         return res.status(500).json(err)
