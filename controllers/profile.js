@@ -72,7 +72,7 @@ async function createWishList(req, res) {
 async function deleteWishList(req, res) {
     try {
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.id].deleteOne()
+        profile.wishLists.id(req.params.id).deleteOne()
         profile.save()
         res.status(200).json(profile)
     } catch(err) {
@@ -98,10 +98,14 @@ async function addToWishList(req, res){
 
 async function removeFromWishList(req, res){
     try {
+        console.log('REQPARAMS', req.params)
         const profile = await Profile.findById(req.user.profile)
-        profile.wishLists[req.body.id].products[req.body.productIndex].deleteOne()
+        const wishList = await profile.wishLists.id(req.params.listId)
+        console.log(wishList)
+        wishList.products.splice(wishList.products.findIndex(product => product._id === req.params.prodId), 1)
         profile.save()
-        res.status(200).json(profile)
+        console.log(profile, wishList)
+        res.status(200).json({profile})
     } catch(err) {
         console.log(err)
         res.status(500).json(err)

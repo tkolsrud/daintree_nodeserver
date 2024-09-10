@@ -23,7 +23,7 @@ router.delete('/delete-wl/:id', checkAuth, profilesCtrl.deleteWishList)
 router.patch('/change-wl-name', checkAuth, profilesCtrl.changeWishListName)
 
 router.post('/add-product-wl', checkAuth, profilesCtrl.addToWishList)
-router.delete('/remove-product-wl', checkAuth, profilesCtrl.removeFromWishList)
+router.delete('/list/:listId/remove-product-wl/:prodId', checkAuth, profilesCtrl.removeFromWishList)
 
 
 export { router }
