@@ -37,9 +37,10 @@ async function login(req, res) {
         if (!process.env.SECRET) throw new Error('no SECRET in back-end env')
         
         const user = await User.findOne({ email: req.body.email })
+        if (!user) throw new Error('User not found')
         const profile = await Profile.findById(user.profile)
     
-        if (!user) throw new Error('User not found')
+        
 
         const isMatch = await user.comparePassword(req.body.password)
         if (!isMatch) throw new Error('Incorrect password')
@@ -73,7 +74,7 @@ async function deleteUser(req, res) {
     try {
         await Profile.findByIdAndDelete(req.user.profile)
         const deletedUser = await User.findByIdAndDelete(req.user._id)
-        res.status(200)
+        res.status(200).json(deletedUser)
     } catch(err) {
         console.log(err)
         return res.status(500).json(err)
